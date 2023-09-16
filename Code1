@@ -1,0 +1,44 @@
+<section class="clearfix">
+  <div class="container webpage-container">
+       <div class="header_line col-md-12 no-padding">
+                     <h2 class="home_ttl upper clearfix home_back_img woo_ttl">Services</h2>
+       </div> 
+      <div class="service_top_bot">
+        <?php 
+                            $pages = array(21,22,23);     
+                            $i = 1;
+                            foreach ($pages as $page) 
+                            {
+                                $post_data = get_post( $page );
+                                //print_r($post_data);
+                                $title = $post_data->post_title;
+                                $content = $post_data->post_content;
+                                $string = substr($content, 0, 0);
+                                $themeta = get_post_meta($page,true);
+                                $metalink = $themeta[0];
+                                if (has_post_thumbnail($page) ):
+                                    $image = wp_get_attachment_image_src( get_post_thumbnail_id($page), 'single-post-thumbnail' );
+                                endif;
+                                $image_URI = $image[0];
+                                if(is_int($i/3))
+                                {
+                                    echo '<div class="services_part col-md-4 clearfix">';
+                                }							  
+                                else 
+                                {
+                                    echo '<div class="services_part col-md-4 service_right_space clearfix">'; 
+                                } ?>
+        <div class="view view-first clearfix">
+          <div class="view_dtl clearfix"> <img src="<?php echo $image_URI; ?>" alt="<?php echo $title; ?>" class="img-thumbnail w100" />
+            <div class="view_main_ttl"> <?php echo $title; ?> </div>
+          </div>
+          <div class="mask clearfix"> <a href="<?php echo get_permalink($page); ?>">
+            <div class="view_ttl"><?php echo $title; ?></div>
+            </a> </div>
+        </div>
+        <?php echo '</div>'; 
+                                $i++; 
+                             } ?> 
+	</div>
+  </div>
+</section>
